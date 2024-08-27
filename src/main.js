@@ -1,11 +1,11 @@
-// ключ що прриходить на почту user_id:45653057
+// ключ що прриходить на почту user_id:45653057 https://pixabay.com
 
-//створення форми для пошуку та результуючого ul картинок
+//1.створення форми для пошуку та результуючого ul картинок
 const bodySelect = document.querySelector("body");
 const firstHtml = 
 `<div class="container">
     <form class="formFetchEl">
-		<input type="text" class="search-input" name="Search" />
+		<input type="text" class="search-input" name="search" />
 		<button class="btnEl">Search</button>
     </form>
     
@@ -14,76 +14,70 @@ const firstHtml =
 
 bodySelect.insertAdjacentHTML("afterbegin", firstHtml)
 
-//функія для отримання фото
-const fetchUserForm = document.querySelector("form");
-const fetchUserBtn = document.querySelector(".btnEl");
 
+                    //імпорт бібліотек
+//iziToast ДЛЯ виведення повідомлень сайт https://www.npmjs.com/package/izitoast
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+//simplelightbox ДЛЯ відтворення великих картинок https://www.npmjs.com/package/simplelightbox
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+console.log(SimpleLightbox);
+//імпорт з сусідніх файлів дж ес
+import { fetchData } from './js/pixabay-api.js';
+import { renderData } from './js/render-functions.js';
+
+//2 функія для отримання фото
+const fetchUserForm = document.querySelector("form");
+const userList = document.querySelector(".galleryEl");
+// const fetchUserBtn = document.querySelector(".btnEl");
 
 fetchUserForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    fetchData()
-        .then((users) => renderData(users))
+    const thisInputSearch = event.currentTarget.elements.search.value.toLowerCase().trim();
+    
+    if (!thisInputSearch) {
+        return
+    };
+
+    fetchData(thisInputSearch)
+        .then((comingsImg) => {
+            if (comingsImg.hits.length === 0) {
+                //попередження .......IZITOST.......
+                //alert("Sorry, there are no images matching your search query. Please try again!");
+                 iziToast.show({
+                message: "Sorry, there are no images matching your search query. Please try again!",
+                messageColor: "#000",
+                messageSize: "18px",
+                messageLineHeight: "20px",
+                backgroundColor: "rgb(255,153,102)",
+                position: "topRight",              
+                 });
+                 // добавити скруглення для iziToast
+            const iziToastElStyle = document.querySelector(".iziToast");
+            iziToastElStyle.style.borderRadius = '10px';
+            iziToastElStyle.style.overflow = 'hidden';
+            } else {
+                //очистка попереднього вмісту карток та створення нових ".galleryEl"                
+                userList.innerHTML = '';
+                renderData(comingsImg.hits, userList)
+
+                // __________ ПРОБЛЕМА З БІБЛІОТЕКОЮ________________
+                    // let gallery = new SimpleLightbox('.galleryEl a', {
+                    // caption: true,
+                    // captionDelay: 250,
+                    // captionsData: 'alt',
+                    // });
+                var gallery = $('.galleryEl a').simpleLightbox();
+
+gallery.refresh();
+            }
+            
+        })
         .catch((error) => console.log(error));
 });
+//2
 
-//функція вилучення(fetc анг.)
-async function fetchData(inputSearch) {
-    const userList = document.querySelector(".galleryEl");
-    //метод створення параметрів за допомогою строки або метод створення параметрів
-    // const searchParams = `q=image&image_type=photo&orientation=horizontal&safesearch=true`;
+//3
 
-const searchParams = new URLSearchParams({
-    key : "45653057",
-    q: 'name',
-    image_type: "photo",
-    orientation: "horizontal",
-    safesearch: "true",
-});
-    const response = await fetch(
-        `https://pixabay.com/api/?${searchParams}`
-    );
-    if (!response.ok) {
-        throw new Error(response.status);
-    }
-    return await response.json();
-}
-
-function renderData(dataImg) {
-    const markup = dataImg.map(({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<li class="gallery-list-item>
-            <a class="gallery-link" href="${largeImageURL}">
-                    <img class="img" src="${webformatURL}" 
-                        alt="${tags}" 
-                        title="${tags}" />
-                    <ul class="data-list">
-                        <li class="data-item">
-                            <p class="data-item-name">Likes</p>
-                            <p class="data-likes">${likes}</p>
-                        </li>
-                        <li class="data-item">
-                            <p class="data-item-name">Views</p>
-                            <p class="data-views">${views}</p>
-                        </li>
-                        <li class="data-item">
-                            <p class="data-item-name">Comments</p>
-                            <p class="data-comments">${comments}</p>
-                        </li>
-                        <li class="data-item">
-                            <p class="data-item-name">Downloads</p>
-                            <p class="data-downloads">${downloads}</p>
-                        </li>
-                    </ul>
-                </a> 
-          </li>`;
-    }).join("");
-    console.log(markup)
-    userList.insertAdjacentHTML("beforeend", markup)
-}
+//4
