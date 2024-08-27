@@ -1,6 +1,7 @@
 //4 функція для відображення зображень та данних
 export function renderData(dataImgArr, userListEl) {
-    console.log(dataImgArr);
+     
+    // дефрагментація
     const markup = dataImgArr.map(({
         webformatURL,
         largeImageURL,
@@ -9,8 +10,8 @@ export function renderData(dataImgArr, userListEl) {
         views,
         comments,
         downloads,
-      }) => {
-        return `<li class="gallery-list-item>
+    }) => {
+        return `<li class="gallery-list-item">
             <a class="gallery-link" href="${largeImageURL}">
                     <img class="img" src="${webformatURL}" 
                         alt="${tags}" 
