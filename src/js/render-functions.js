@@ -12,29 +12,29 @@ export function renderData(dataImgArr, userListEl) {
         downloads,
     }) => {
         return `<li class="gallery-list-item">
-            <a class="gallery-link" href="${largeImageURL}">
-                    <img class="img" src="${webformatURL}" 
+                    <a class="gallery-link" href="${largeImageURL}">
+                        <img class="img" src="${webformatURL}" 
                         alt="${tags}" 
                         title="${tags}" />
+                    </a>
                     <ul class="data-list">
                         <li class="data-item">
                             <p class="data-item-name">Likes</p>
-                            <p class="data-likes">${likes}</p>
+                            <p class="data-numbers">${likes}</p>
                         </li>
                         <li class="data-item">
                             <p class="data-item-name">Views</p>
-                            <p class="data-views">${views}</p>
+                            <p class="data-numbers">${views}</p>
                         </li>
                         <li class="data-item">
                             <p class="data-item-name">Comments</p>
-                            <p class="data-comments">${comments}</p>
+                            <p class="data-numbers">${comments}</p>
                         </li>
                         <li class="data-item">
                             <p class="data-item-name">Downloads</p>
-                            <p class="data-downloads">${downloads}</p>
+                            <p class="data-numbers">${downloads}</p>
                         </li>
-                    </ul>
-                </a> 
+                    </ul> 
           </li>`;
     }).join("");
     

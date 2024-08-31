@@ -19,7 +19,7 @@ const loader = document.querySelector(".loader");
 loader.style.display = 'none';
 
                     //імпорт бібліотек
-//iziToast ДЛЯ виведення повідомлень сайт https://www.npmjs.com/package/izitoast
+//iziToast ДЛЯ виведення повідомлень сайт https://www.npmjs.com/package/izitoast https://marcelodolza.github.io/iziToast/
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 //simplelightbox ДЛЯ відтворення великих картинок https://www.npmjs.com/package/simplelightbox
@@ -42,8 +42,7 @@ const userList = document.querySelector(".galleryEl");
 
 fetchUserForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    //0 завантажувач видимий
-    loader.style.display = 'block';
+    
     const thisInputSearch = event.currentTarget.elements.search.value.toLowerCase().trim();
     
     if (!thisInputSearch) {
@@ -56,32 +55,35 @@ fetchUserForm.addEventListener("submit", (event) => {
                 //попередження .......IZITOST.......
                 //alert("Sorry, there are no images matching your search query. Please try again!");
                  iziToast.show({
-                message: "Sorry, there are no images matching your search query. Please try again!",
+                message: "Sorry, there are no images matching <br> your search query. Please try again!",
                 messageColor: "#000",
                 messageSize: "18px",
                 messageLineHeight: "20px",
                 backgroundColor: "rgb(255,153,102)",
-                position: "topRight",              
+                position: "topRight", 
+                image: './img/bi_x-octagon.svg',
+                imageWidth: 30,
                  });
                  // добавити скруглення для iziToast
             const iziToastElStyle = document.querySelector(".iziToast");
             iziToastElStyle.style.borderRadius = '10px';
                 iziToastElStyle.style.overflow = 'hidden';
-                 //0 прибирання з виду завантажувача
-        loader.style.display = 'none';
+                //добавить стилі на іконку в ізітост
+                 const iziToastImgStyle = document.querySelector(".iziToast-cover");
+            iziToastImgStyle.style.backgroundColor = 'transparent';
+                iziToastImgStyle.style.left = "10px";
+                 
             } else {
                 //очистка попереднього вмісту карток та створення нових ".galleryEl"                
                 userList.innerHTML = '';
-
+                //0 завантажувач видимий
+                    loader.style.display = 'block';
                 renderData(comingsImg.hits, userList);
                  
                    //метод для оновлення бібліотеки
                 gallery.refresh() 
-                //0 прибирання з виду завантажувача
-                // loader.style.display = 'none';
-                
-// Перевірте завантаження всіх зображень
-            const images = userList.querySelectorAll('img');
+                 //0 Перевірте завантаження всіх зображень
+           const images = userList.querySelectorAll('img');
             let loadedImagesCount = 0;
 
             images.forEach(img => {
@@ -90,22 +92,20 @@ fetchUserForm.addEventListener("submit", (event) => {
                     if (loadedImagesCount === images.length) {
                         // Сховати індикатор завантаження після завантаження всіх картинок
                         loader.style.display = 'none';
-                    }
+                    } 
                 } else {
                     img.addEventListener('load', () => {
                         loadedImagesCount++;
                         if (loadedImagesCount === images.length) {
                             // Сховати індикатор завантаження після завантаження всіх картинок
                             loader.style.display = 'none';
-                        }
+                        } 
                     });
                 }
-            });
-
+            });//0
             }
         })
         .catch((error) => {
-            console.log(error) 
             //попередження .......IZITOST.......
                 //alert(`Sorry, ${error}. Please try again!`);
                  iziToast.show({
@@ -121,8 +121,8 @@ fetchUserForm.addEventListener("submit", (event) => {
             iziToastElStyle.style.borderRadius = '10px';
                 iziToastElStyle.style.overflow = 'hidden';
         }) 
-        .finally(() => {
-	  //0 прибирання з виду завантажувача
-        loader.style.display = 'none';
-	});
+    //0 добавить у будьякому випадку вимкнення стилю але відпрацьовує скоріше ніж завантажаться картинки
+    //     .finally(() => {
+    //        loader.style.display = 'none';
+	// });
 });
