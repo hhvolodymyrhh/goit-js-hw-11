@@ -92,7 +92,8 @@ width: 1128px;
 .data-list{
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 28px;
   margin: 4px 0;
 }
 
@@ -100,8 +101,6 @@ width: 1128px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  column-gap: 0;
-  
 }
 
 .data-item-name{
