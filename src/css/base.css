@@ -92,8 +92,7 @@ width: 1128px;
 .data-list{
   display: flex;
   align-items: center;
-  justify-content: center;
-  
+  justify-content: space-evenly;
   margin: 4px 0;
 }
 
