@@ -64,8 +64,7 @@ fetchUserForm.addEventListener("submit", (event) => {
                 backgroundColor: "rgb(255,153,102)",
                 position: "topRight", 
                 iconUrl: iconUrl,
-                     imageWidth: 30,
-                timeout: 500000,
+                imageWidth: 30,
                  });
                  // добавити скруглення для iziToast
             const iziToastElStyle = document.querySelector(".iziToast");
