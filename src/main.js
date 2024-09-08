@@ -64,17 +64,14 @@ fetchUserForm.addEventListener("submit", (event) => {
                 backgroundColor: "rgb(255,153,102)",
                 position: "topRight", 
                 iconUrl: iconUrl,
-                imageWidth: 30,
+                     imageWidth: 30,
+                timeout: 500000,
                  });
                  // добавити скруглення для iziToast
             const iziToastElStyle = document.querySelector(".iziToast");
             iziToastElStyle.style.borderRadius = '10px';
                 iziToastElStyle.style.overflow = 'hidden';
-                //добавить стилі на іконку в ізітост
-                 const iziToastImgStyle = document.querySelector(".iziToast-cover");
-            iziToastImgStyle.style.backgroundColor = 'transparent';
-                iziToastImgStyle.style.left = "10px";
-                 
+                
             } else {
                 //очистка попереднього вмісту карток та створення нових ".galleryEl"                
                 userList.innerHTML = '';
