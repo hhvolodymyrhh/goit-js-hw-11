@@ -34,6 +34,8 @@ let gallery = new SimpleLightbox('.galleryEl a', {
 //імпорт з сусідніх файлів дж ес
 import { fetchData } from './js/pixabay-api.js';
 import { renderData } from './js/render-functions.js';
+//підключення картинки для ізітост з папок проекту
+import iconUrl from './img/octagon.svg';
 
 //2 функія для отримання фото
 const fetchUserForm = document.querySelector("form");
@@ -61,7 +63,7 @@ fetchUserForm.addEventListener("submit", (event) => {
                 messageLineHeight: "20px",
                 backgroundColor: "rgb(255,153,102)",
                 position: "topRight", 
-                image: './img/bi_x-octagon.svg',
+                iconUrl: iconUrl,
                 imageWidth: 30,
                  });
                  // добавити скруглення для iziToast
