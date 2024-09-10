@@ -44,6 +44,8 @@ const userList = document.querySelector(".galleryEl");
 
 fetchUserForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    //очистка попереднього вмісту карток та створення нових ".galleryEl"                
+    userList.innerHTML = '';
     
     const thisInputSearch = event.currentTarget.elements.search.value.toLowerCase().trim();
     
@@ -72,8 +74,7 @@ fetchUserForm.addEventListener("submit", (event) => {
                 iziToastElStyle.style.overflow = 'hidden';
                 
             } else {
-                //очистка попереднього вмісту карток та створення нових ".galleryEl"                
-                userList.innerHTML = '';
+                
                 //0 завантажувач видимий
                     loader.style.display = 'block';
                 renderData(comingsImg.hits, userList);
@@ -114,6 +115,8 @@ fetchUserForm.addEventListener("submit", (event) => {
                 backgroundColor: "rgb(255,153,102)",
                 position: "topRight",              
                  });
+            // Сховати індикатор завантаження після завантаження всіх картинок
+                            loader.style.display = 'none';
                  // добавити скруглення для iziToast
             const iziToastElStyle = document.querySelector(".iziToast");
             iziToastElStyle.style.borderRadius = '10px';
