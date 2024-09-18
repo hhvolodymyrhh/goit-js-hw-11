@@ -1,0 +1,14 @@
+.notification {
+  font-size: 18px !important;
+  line-height: 20px !important;
+  color: #000 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+
+  &.sorry {
+    background-color: rgb(255, 153, 102) !important;
+  }
+  &.attention {
+    background-color: rgb(255, 252, 102) !important;
+  }
+}
