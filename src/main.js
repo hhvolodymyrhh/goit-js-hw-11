@@ -38,7 +38,7 @@ import { renderData } from './js/render-functions.js';
 import iconUrl from './img/octagon.svg';
 
 //2 функія для отримання фото
-const fetchUserForm = document.querySelector("form");
+const fetchUserForm = document.querySelector("form"); // слово "fetch" позначає дію, а тут у змінні посилання на DOM-елемент
 const userList = document.querySelector(".galleryEl");
 // const fetchUserBtn = document.querySelector(".btnEl");
 
@@ -50,6 +50,11 @@ fetchUserForm.addEventListener("submit", (event) => {
     const thisInputSearch = event.currentTarget.elements.search.value.toLowerCase().trim();
     
     if (!thisInputSearch) {
+      iziToast.show({
+      class: 'notification attention',
+      message: 'Input cannot be empty',
+      position: 'topCenter',
+    });
         return
     };
 
@@ -86,28 +91,32 @@ fetchUserForm.addEventListener("submit", (event) => {
             let loadedImagesCount = 0;
 
             images.forEach(img => {
-                if (img.complete) {
-                    loadedImagesCount++;
-                    if (loadedImagesCount === images.length) {
-                        // Сховати індикатор завантаження після завантаження всіх картинок
-                        loader.style.display = 'none';
-                    } 
-                } else {
-                    img.addEventListener('load', () => {
+                
+                    img.addEventListener('load', (evt) => {
                         loadedImagesCount++;
-                        if (loadedImagesCount === images.length) {
-                            // Сховати індикатор завантаження після завантаження всіх картинок
-                            loader.style.display = 'none';
+                        if (evt.target.complete) {
+                           loadedImagesCount++;
                         } 
+                         if (loadedImagesCount === images.length) {
+              /**
+               * Потестувати роботу лоадера можна змінивши швидкість
+               * інтернет зʼєднання в DevTools
+               * В такому випадку гарно видно, що лоадер працює до тих пір,
+               * поки вантажаться усі зображення
+               */
+              // Сховати індикатор завантаження після завантаження всіх картинок
+              loader.style.display = 'none';
+            }
                     });
-                }
+                
             });//0
             }
         })
         .catch((error) => {
             //попередження .......IZITOST.......
                 //alert(`Sorry, ${error}. Please try again!`);
-                 iziToast.show({
+            iziToast.show({
+                //class: 'notification sorry', // за допомогою цієї властивості можна легко додати стилі через CSS
                 message: `Sorry, ${error}. Please try again!`,
                 messageColor: "#000",
                 messageSize: "18px",
